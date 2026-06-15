@@ -1,0 +1,19 @@
+{
+  "name": "openrouter-5ai-transcriber-explainer",
+  "version": "2.0.0",
+  "description": "Mic/share-screen transcription via OpenRouter STT + 5 OpenRouter AI agents for transcript point meaning explanation.",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "ws": "^8.18.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

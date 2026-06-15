@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OpenRouter 5AI Transcriber + Explainer</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app">
+    <header class="hero">
+      <div>
+        <h1>OpenRouter 5AI Transcriber + Explainer</h1>
+        <p>
+          Mic / Share Screen → audio chunk → backend lokal → OpenRouter STT → transkrip → 5 AI OpenRouter untuk menjelaskan makna poin-poin dan maksud transkrip.
+        </p>
+      </div>
+      <div class="badge" id="connectionBadge">OFFLINE</div>
+    </header>
+
+    <section class="notice">
+      <b>Catatan:</b> 5 AI gratis dipakai untuk analisis/penjelasan transkrip. STT/transkripsi audio di OpenRouter tergantung model/provider di akun kamu. Kalau STT gagal, paste transkrip manual ke textarea lalu klik <b>Analisis 5 AI</b>.
+    </section>
+
+    <section class="panel">
+      <div class="field">
+        <label for="sourceMode">Sumber Audio</label>
+        <select id="sourceMode">
+          <option value="mic">Microphone</option>
+          <option value="screen">Share Screen / Tab Audio</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="language">Bahasa Transkrip</label>
+        <select id="language">
+          <option value="id" selected>Indonesia</option>
+          <option value="en">English</option>
+          <option value="ms">Malay</option>
+          <option value="ja">Japanese</option>
+          <option value="ko">Korean</option>
+          <option value="zh">Chinese</option>
+          <option value="ar">Arabic</option>
+          <option value="hi">Hindi</option>
+          <option value="es">Spanish</option>
+          <option value="fr">French</option>
+          <option value="de">German</option>
+          <option value="auto">Auto Detect</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="chunkMs">Chunk Audio</label>
+        <select id="chunkMs">
+          <option value="5000">5 detik - cepat</option>
+          <option value="8000" selected>8 detik - stabil</option>
+          <option value="12000">12 detik - ucapan cepat</option>
+          <option value="15000">15 detik - lebih rapi</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="timestampMode">Timestamp</label>
+        <select id="timestampMode">
+          <option value="on" selected>Aktif</option>
+          <option value="off">Mati</option>
+        </select>
+      </div>
+    </section>
+
+    <div class="buttons">
+      <button id="startBtn" class="start">Mulai Transkrip</button>
+      <button id="stopBtn" class="stop" disabled>Stop</button>
+      <button id="explainBtn" class="primary">Analisis 5 AI</button>
+      <button id="copyBtn" class="secondary">Copy Transkrip</button>
+      <button id="copyExplainBtn" class="secondary">Copy Hasil AI</button>
+      <button id="downloadBtn" class="secondary">Download TXT</button>
+      <button id="clearBtn" class="secondary">Bersihkan</button>
+    </div>
+
+    <div id="status" class="status">Status: siap.</div>
+
+    <section class="model-strip" id="modelStrip">
+      <div class="model-card muted">Memuat konfigurasi 5 AI...</div>
+    </section>
+
+    <section class="grid">
+      <div class="left">
+        <label class="textarea-label">Hasil Transkrip / Paste Manual di Sini</label>
+        <textarea id="output" placeholder="Transkrip akan muncul di sini. Kamu juga bisa paste transkrip manual di sini lalu klik Analisis 5 AI..."></textarea>
+      </div>
+
+      <aside class="right">
+        <div class="box">
+          <h3>Proses Chunk</h3>
+          <div id="chunkInfo">Belum mulai.</div>
+          <div class="progress"><div id="progressBar"></div></div>
+        </div>
+
+        <div class="box">
+          <h3>Preview Share Screen</h3>
+          <video id="preview" autoplay muted playsinline hidden></video>
+          <p class="small">Untuk tab audio, pilih tab yang ada suara lalu centang <b>Share tab audio</b>.</p>
+        </div>
+
+        <div class="box">
+          <h3>Statistik</h3>
+          <div class="stats">
+            <div class="stat"><span>Chunk Dikirim</span><b id="sentCount">0</b></div>
+            <div class="stat"><span>Chunk Selesai</span><b id="doneCount">0</b></div>
+            <div class="stat"><span>Kalimat Masuk</span><b id="lineCount">0</b></div>
+            <div class="stat"><span>Bahasa</span><b id="langText">id</b></div>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="analysis-layout">
+      <div class="box final-box">
+        <h2>Hasil Final 5 AI</h2>
+        <div id="finalExplanation" class="explanation">Klik “Analisis 5 AI” setelah transkrip muncul.</div>
+      </div>
+
+      <div class="box">
+        <h2>Detail Output Tiap AI</h2>
+        <div id="agentDetails" class="agent-details">
+          Belum ada analisis.
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
